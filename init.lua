@@ -22,14 +22,16 @@ vim.api.nvim_create_autocmd("DirChanged", {
 
 -- nvim-treesitter setup
 require 'nvim-treesitter.configs'.setup({
+    highlight = {
+        enable = true,
+    },
     rainbow = {
         enable = true,
         query = {
             'rainbow-parens',
-            html = 'rainbow-tags',
+            'rainbow-tags',
         },
-        -- for some reason this is breaking tsx files
-        extended_mode = false,
+        extended_mode = true,
     }
 })
 

@@ -66,8 +66,9 @@ return require('packer').startup(function(use)
     -- Autopairs
     use { 'windwp/nvim-autopairs', config = function() require 'nvim-autopairs'.setup() end }
     use { 'windwp/nvim-ts-autotag', config = function() require 'nvim-ts-autotag'.setup() end }
-    use { 'HiPhish/nvim-ts-rainbow2',
-        requires = 'nvim-treesitter/nvim-treesitter' }
+    -- use { 'HiPhish/nvim-ts-rainbow2',
+    --     requires = 'nvim-treesitter/nvim-treesitter' }
+    use { 'p00f/nvim-ts-rainbow' }
 
     -- Buffer line
     use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons',

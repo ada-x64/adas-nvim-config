@@ -53,19 +53,18 @@ return require('packer').startup(function(use)
     -- nice UI for LSP
     use({
         "glepnir/lspsaga.nvim",
+        event = 'BufRead',
         branch = "main",
         config = function()
-            local saga = require("lspsaga")
-
-            saga.init_lsp_saga({
-                -- your configuration
-            })
+            require("lspsaga").setup({})
         end,
     })
 
     -- Autopairs
     use { 'windwp/nvim-autopairs', config = function() require 'nvim-autopairs'.setup() end }
     use { 'windwp/nvim-ts-autotag', config = function() require 'nvim-ts-autotag'.setup() end }
+    use { 'kylechui/nvim-surround', tag = "*", config = function() require 'nvim-surround'.setup() end }
+    -- currently broken but promising successor
     -- use { 'HiPhish/nvim-ts-rainbow2',
     --     requires = 'nvim-treesitter/nvim-treesitter' }
     use { 'p00f/nvim-ts-rainbow' }
@@ -78,10 +77,7 @@ return require('packer').startup(function(use)
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-        config = function() require 'lualine'.setup({
-                theme = 'ayu_mirage'
-            })
-        end
+        config = function() require 'lualine'.setup({}) end
     }
 
     -- Reference for Rust setup
@@ -117,6 +113,17 @@ return require('packer').startup(function(use)
 
     -- Telescope (fuzzy find)
     use("nvim-telescope/telescope.nvim")
+
+    -- Legendary (command prompt)
+    -- Leaving this unimplemented for now, it's too early.
+    -- This would be awesome if it could scrape commands.
+    -- Otherwise it's too much effort to set up.
+    -- Would rather just use autocomplete.
+    -- use { 'mrjones2014/legendary.nvim',
+    --     tag = "v2.1.0",
+    --     requires = 'kkharji/sqlite.lua',
+    --     -- which_key = { auto_register = true }
+    -- }
 
     -- File trees
     use {
@@ -154,9 +161,12 @@ return require('packer').startup(function(use)
     -- Terminal
     use {
         "akinsho/toggleterm.nvim", tag = '*',
+        -- don't use default open behavior - overriden in keymaps.lua
+        open_mapping = nil,
+        terminal_mappings = false,
+        -- open vertical by default
         config = function()
             require("toggleterm").setup {
-                open_mapping = [[<c-\>]],
                 direction = "vertical",
                 size = function(term)
                     if term.direction == "horizontal" then
